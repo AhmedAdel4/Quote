@@ -32,6 +32,8 @@ Route::group(['namespace' => 'API','prefix' => 'qoute'], function () {
 
     Route::post('add', 'QouteController@add');
     Route::post('update', 'QouteController@update');
+    Route::post('addImage', 'QouteController@addLocalImage');
+    Route::post('getImages', 'QouteController@getLocalImages');
   
 
 });

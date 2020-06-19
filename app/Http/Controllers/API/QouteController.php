@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\LocalImage;
 
 class QouteController extends Controller
 {
@@ -72,6 +73,48 @@ class QouteController extends Controller
     public function show($id)
     {
         //
+    }
+   
+    /**
+     * Get app local images
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getLocalImages()
+    {
+        $images = LocalImage::all();
+        
+        $result = array();
+        foreach($images as $image)
+        {
+            $data = (object)['path' => $image->path,'nums' => explode(',',$image->nums)];
+            $result[] = $data;
+        }
+        return response()->json($result);
+    }
+    public function addLocalImage(Request $request)
+    {
+        $validate = Validator::make($request->all(),[
+            'image' => 'required',
+            'nums' => 'required',
+
+        ]);
+        if($validate->fails())
+        {
+            return response()->json($validate->errors());
+        }
+        $newImage = new LocalImage;
+        if($request->hasFile('image'))
+        {
+            $imageName = $request->image->getClientOriginalName();
+            $imagePath = Image::make($request->image->getRealPath());
+            $imagePath->save(public_path().'/images/localImages/'.$imageName );
+            $newImage->path = $imageName;
+        }
+        $newImage->nums = $request['nums'];
+        $newImage->save();
+        return response()->json('Image saved successfully',200);
     }
 
     /**
