@@ -1,6 +1,6 @@
 # Project Title
 
-Qoute
+Quote
 
 <h2>About</h2>
 
