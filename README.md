@@ -1,10 +1,10 @@
 # Project Title
 
-this is a social network project using laravel framework and mysql.
+Qoute
 
-##About
+<h2>About</h2>
 
-it's a backend side integrated with flutter as frontend using APIs
+this is a social media mobile application usin flutter as frontend and laravel api as backend.
 
 
 ### Installing
